@@ -4,8 +4,8 @@ class User < ApplicationRecord
   has_one_attached :avatar, dependent: :destroy
   has_many :user_games
   has_many :games, through: :user_games
-  has_many :messages
   has_many :chatrooms
+  has_many :messages, through: :chatrooms
 
   has_secure_password
 

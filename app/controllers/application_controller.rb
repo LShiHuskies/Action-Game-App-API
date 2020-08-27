@@ -27,8 +27,8 @@ class ApplicationController < ActionController::Base
   def requires_login
     if !valid_token?
       render json: {
-        message: 'WRONG INFO!!!'
-      }, status: :authorized
+        message: 'Incorrect Information'
+      }, status: :unauthorized
     end
   end
 
@@ -61,7 +61,8 @@ class ApplicationController < ActionController::Base
   end
 
   def authorized(user)
-    current_user_id == user.id
+    # current_user_id == user.id
+    session[user_id] == user.id
   end
 
   def payload (name, id)

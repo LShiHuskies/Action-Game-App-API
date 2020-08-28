@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
 
+    helper_method :authorized
+
 
   def secret_key
     ENV['SECRET_KEY']

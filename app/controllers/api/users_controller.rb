@@ -1,7 +1,7 @@
 class Api::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
   # before_action :requires_login, only: [:index, :show, :destroy]
-  before_action :get_user, only: [:show, :destroy]
+  before_action :get_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -24,24 +24,25 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    return unless authorized(@user)
+    # return unless authorized(@user)
 
     render json: @user
   end
 
+  def edit
 
+  end
 
   def update
 
     # return unless authorized(@user)
 
-    byebug
-
+    render json: @user
   end
 
 
   def destroy
-
+    @user.destroy
   end
 
 

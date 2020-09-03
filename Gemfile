@@ -32,6 +32,12 @@ gem 'mini_magick', '~> 4.8'
 gem 'fog'
 
 gem 'jwt'
+
+# gem 'active_model_serializers'
+
+gem 'rack-cors'
+# 
+# gem "faker", "~> 1.9"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -62,3 +68,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'dotenv-rails', groups: [:development, :test]

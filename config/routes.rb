@@ -7,5 +7,7 @@ Rails.application.routes.draw do
     resources :chatrooms
     resources :messages
   end
-  post '/login', to: 'sessions#create'
+  get 'login', to: 'api/sessions#new'
+  post 'login', to: 'api/sessions#create'
+  delete 'logout', to: 'api/sessions#destroy'
 end

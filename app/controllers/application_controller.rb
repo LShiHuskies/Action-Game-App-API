@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-    helper_method :authorized
+  helper_method :authorized, :get_token, :payload
 
 
   def secret_key
@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
 
   def decoded_token
     JWT.decode authorization_token(), secret_key(), true, { algorithm: 'HS256' }
-
     begin
       return JWT.decode authorization_token(), secret_key(), true, { algorithm: 'HS256' }
     rescue JWT::VerificationError, JWT::DecodeError
@@ -38,37 +37,23 @@ class ApplicationController < ActionController::Base
   #   decoded_token[0]["id"] < 100
   # end
 
-  # def authenticate(data)
-  #   begin
-  #     if (decoded_token())
-  #       render json: data
-  #     end
-  #
-  #   rescue JWT::DecodeError
-  #     render json: {
-  #       message: 'INFO ENTERED IS WRONG!!!'
-  #     }, status: :unauthorized
-  #   end
-  # end
-
   def try_decode_token
-
     begin
-      decoded = JWT.decode(authorization_token(), secret_key(), true, {algorithm: 'HS256' })
+      # decoded = JWT.decode(authorization_token(), secret_key(), true, {algorithm: 'HS256' })
+      decoded = JWT.decode authorization_token(), secret_key(), true, {algorithm: 'HS256' }
     rescue JWT::VerificationError, JWT::DecodeError
       return nil
     end
-
     decoded
   end
 
   def authorized(user)
-    # current_user_id == user.id
-    session[user_id] == user.id
+    tryDecode = try_decode_token
+    tryDecode && tryDecode[0] && tryDecode[0]['id'] == user.id
   end
 
   def payload (name, id)
-    { name: name, id: id}
+    { name: name, id: id }
   end
 
   def get_token(payload)

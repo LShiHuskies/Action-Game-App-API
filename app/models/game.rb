@@ -4,8 +4,8 @@ class Game < ApplicationRecord
   has_many :user_games
   has_many :users, through: :user_games
   has_many :chatrooms, through: :user_games
-  has_many :messages, through: :chatrooms
+  # has_many :messages, through: :chatrooms
 
-  validates :name, uniqueness: true, length: { minimum: 5, maximum: 30 }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }, length: { minimum: 5, maximum: 30 }
 
 end

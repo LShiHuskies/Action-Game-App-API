@@ -1,6 +1,6 @@
 class Api::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :requires_login, only: [:index, :show, :update, :destroy]
+  before_action :requires_login, only: [:index, :show, :edit, :update, :destroy]
   before_action :get_user, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -10,6 +10,7 @@ class Api::UsersController < ApplicationController
 
   def new
     @user = User.new
+    render json: @user
   end
 
   def create
@@ -27,9 +28,8 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-
     if !authorized(@user)
-      render json: { message: 'Off limits!' }
+      render json: { message: 'Off limits!' }, status: :unauthorized
       return
     end
 
@@ -37,23 +37,25 @@ class Api::UsersController < ApplicationController
   end
 
   def edit
-
+    render json: @user
   end
 
   def update
-
-    return unless authorized(@user)
-
-    if @user.update(user_params)
+    if @user.update(user_params) && authorized(@user)
       render json: @user
     else
-      render json: {message: 'WRONG!!!'}
+      render json: {message: 'WRONG!!!'}, status: :unauthorized
     end
   end
 
 
   def destroy
-    @user.destroy
+    if authorized(@user)
+      render json: @user.destroy
+    else
+      render json: {message: 'WRONG!!!'}, status: :unauthorized
+    end
+
   end
 
 

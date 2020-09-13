@@ -7,10 +7,10 @@ class Api::SessionsController < ApplicationController
 
   def create
     @user = User.find_by(username: params['username'])
-
     if @user && @user.authenticate(params[:password])
       # payload = { username: params['username'], id: @user.id }
       session['user_id'] = @user.id
+      # return get_token(payload(@user.username, @user.id) )
       render json: {
         avatar: @user.avatar,
         token: get_token(payload(@user.username, @user.id) )

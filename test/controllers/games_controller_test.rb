@@ -61,11 +61,4 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
 
 
-
-
-
-
-
-
-
 end

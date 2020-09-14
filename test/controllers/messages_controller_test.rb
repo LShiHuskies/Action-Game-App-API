@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'json'
 
 
 class MessagesControllerTest < ActionDispatch::IntegrationTest
@@ -28,6 +27,15 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'should not create messages without any of the proper attributes' do
+    token = sign_in_as(@user)
+
+    assert_difference('Message.count', 0) do
+      post api_messages_path, headers: { Authorization: token }, params: { message: { user_id: @user.id,
+                                                  chatroom_id: @chatroom.id, message: '' } }
+    end
+  end
+
   test 'should be able to see all the messages pertaining to the chatroom if logged in' do
     token = sign_in_as(@user)
     @message.save
@@ -46,6 +54,31 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :missing
   end
 
+  test 'should update the message of a user that belongs to that user' do
+    token = sign_in_as(@user)
+    @message.save
+    put api_message_path(@message), headers: { Authorization: token }, params: { message: { message: 'Hopefully works' } }
+
+    assert_response :success
+  end
+
+  test 'should not update the message of a user that does not belong to the user' do
+    @user2 = User.create(username: 'testing3', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test@example.com')
+    token = sign_in_as(@user2)
+    @message.save
+
+    put api_message_path(@message), headers: { Authorization: token }, params: { message: { message: 'Hopefully works' } }
+    assert_response 401
+  end
+
+  test 'should not be able to delete a message that does not belong to the user' do
+    @user2 = User.create(username: 'testing3', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test@example.com')
+    token = sign_in_as(@user2)
+    @message.save
+
+    delete api_message_path(@message), headers: { Authorization: token }
+    assert_response 401
+  end
 
 
 

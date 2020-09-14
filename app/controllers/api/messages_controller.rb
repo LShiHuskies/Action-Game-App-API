@@ -1,9 +1,7 @@
 class Api::MessagesController < ApplicationController
   before_action :requires_login, only: [:index, :show, :edit, :update]
   before_action :get_message, only: [:show, :edit, :update, :destroy]
-  # before_action :get_chatroom, only: [:index, :show, :edit, :update, :destroy]
   before_action :get_user, only: [:update, :destroy]
-  # before_action :get_user_game
 
 
 
@@ -49,7 +47,7 @@ class Api::MessagesController < ApplicationController
     if authorized(@user)
       render json: @message.destroy
     else
-      render json: {message: 'WRONG!!!'}, status: :unauthorized
+      render json: { message: 'WRONG!!!' }, status: :unauthorized
     end
   end
 

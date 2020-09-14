@@ -30,10 +30,9 @@ class Api::UsersController < ApplicationController
   def show
     if !authorized(@user)
       render json: { message: 'Off limits!' }, status: :unauthorized
-      return
+    else
+      render json: @user
     end
-
-    render json: @user
   end
 
   def edit
@@ -53,7 +52,7 @@ class Api::UsersController < ApplicationController
     if authorized(@user)
       render json: @user.destroy
     else
-      render json: {message: 'WRONG!!!'}, status: :unauthorized
+      render json: { message: 'WRONG!!!' }, status: :unauthorized
     end
 
   end

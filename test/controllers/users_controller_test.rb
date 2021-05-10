@@ -50,7 +50,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not be able to show one user if not their own' do
     @user.save
-    @user2 = User.create(username: 'testing2', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test@example.com')
+    @user2 = User.create(username: 'testing2', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test2@example.com')
 
     token = sign_in_as(@user)
 
@@ -78,7 +78,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should not be able to update the user that is not theirs' do
     @user.save
-    @user2 = User.create(username: 'testing2', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test@example.com')
+    @user2 = User.create(username: 'testing2', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test2@example.com')
 
     token = sign_in_as(@user)
 
@@ -90,7 +90,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test 'should not delete the user if it is not theirs' do
     @user.save
     token = sign_in_as(@user)
-    @user2 = User.create(username: 'testing2', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test@example.com')
+    @user2 = User.create(username: 'testing2', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test2@example.com')
     delete api_user_path(@user2), headers: { Authorization: token }
 
     assert_response 401

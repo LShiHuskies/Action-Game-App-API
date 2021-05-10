@@ -20,7 +20,6 @@ class NotifierMailer < ApplicationMailer
 
       def update_account_notify(recipient)
         @user = recipient
-        byebug
         mail(
             to: @user.email,
             subject: "Account Updated",

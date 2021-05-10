@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :authorized, :get_token, :payload
 
-
   def secret_key
     ENV['SECRET_KEY']
   end

@@ -15,8 +15,8 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
+      NotifierMailer.welcome_email(@user).deliver_now
       render json: {
         user: @user,
         token: get_token(payload(@user.username, @user.id) )
@@ -41,6 +41,7 @@ class Api::UsersController < ApplicationController
 
   def update
     if @user.update(user_params) && authorized(@user)
+      NotifierMailer.update_account_notify(@user).deliver_now
       render json: @user
     else
       render json: {message: 'WRONG!!!'}, status: :unauthorized

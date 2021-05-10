@@ -58,4 +58,18 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # config.action_mailer.delivery_method = :smtp
+
+ActionMailer::Base.smtp_settings = {
+  :user_name => ENV['USER_NAME'], # This is the string literal 'apikey', NOT the ID of your API key
+  :password => ENV['API_KEY'], # This is the secret sendgrid API key which was issued during API key creation
+  :domain => ENV['DOMAIN'],
+  :address => ENV['ADDRESS'],
+  :port => 587,
+  :authentication => :plain,
+  :enable_starttls_auto => true
+}
+
+
 end

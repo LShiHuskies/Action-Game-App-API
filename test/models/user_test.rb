@@ -31,7 +31,6 @@ class UserTest < ActiveSupport::TestCase
     assert @user.valid?
   end
 
-
   test "User needs a proper email address" do
     @user.username = "hello"
     @user.password = "12345678"

@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   end
   get 'login', to: 'api/sessions#new'
   post 'login', to: 'api/sessions#create'
+  post 'recover', to: 'api/sessions#recover'
   delete 'logout', to: 'api/sessions#destroy'
 end

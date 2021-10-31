@@ -5,7 +5,7 @@ class NotifierMailerTest < ActionMailer::TestCase
   #   assert true
   # end
   def setup
-    @user = User.new(username: 'testing1', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test@example.com')
+    @user = User.new(username: 'testing1', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'shi.louis2@gmail.com')
     @game = Game.new(name: 'New Game')
   end
   # we need to ensure that the the default email is correct

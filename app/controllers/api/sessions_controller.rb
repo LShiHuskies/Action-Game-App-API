@@ -22,6 +22,11 @@ class Api::SessionsController < ApplicationController
     end
   end
 
+  def recover
+    @user = User.find_by(email: params['email'].downcase)
+    NotifierMailer.reset_email(@user).deliver_now if @user
+  end
+
   def destroy
     session.delete(:user_id)
   end

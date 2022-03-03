@@ -16,11 +16,19 @@ class Api::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      NotifierMailer.welcome_email(@user).deliver_now
+      # token = get_token(payload(@user.username, @user.id))
+      # byebug
+      @user.send_activation_email
+
       render json: {
-        user: @user,
-        token: get_token(payload(@user.username, @user.id) )
+        message: "Please check your email to activate your account."
       }
+      
+      # NotifierMailer.welcome_email(@user).deliver_now
+      # render json: {
+      #   user: @user,
+      #   token: get_token(payload(@user.username, @user.id) )
+      # }
     else
       render json: @user.errors.full_messages
     end

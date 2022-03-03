@@ -1,5 +1,12 @@
 class NotifierMailer < ApplicationMailer
 
+    def account_activation(recipient, token)
+        @user = recipient
+        @token = token
+        
+        mail to: @user.email, subject: "Account Activation"
+    end
+
     def welcome_email(recipient)
         @user = recipient
         mail(

@@ -4,7 +4,7 @@ require 'test_helper'
 class MessagesControllerTest < ActionDispatch::IntegrationTest
 
   def setup
-    @user = User.create(username: 'testing1', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test@example.com')
+    @user = User.create(username: 'testing1', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test@example.com', activated: true)
     @game = Game.create(name: 'New Game')
     @user_game = UserGame.create(user: @user, game: @game)
     @chatroom = Chatroom.create(user_game: @user_game)

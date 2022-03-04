@@ -3,7 +3,7 @@ require 'test_helper'
 class UsersControllerTest < ActionDispatch::IntegrationTest
 
   def setup
-    @user = User.new(username: 'testing1', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test@example.com')
+    @user = User.new(username: 'testing1', first_name: 'tester', last_name: 'tester', password: '12345678', email: 'test@example.com', activated: true)
   end
 
   test 'creating a user with and without proper attributes' do

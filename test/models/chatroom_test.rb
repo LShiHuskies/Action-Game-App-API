@@ -3,7 +3,7 @@ require 'test_helper'
 class ChatroomTest < ActiveSupport::TestCase
 
   def setup
-    @user = User.create(username: 'tester', first_name: 'tester', last_name: 'name', email: "something@email.com", password: '12345678')
+    @user = User.create(username: 'tester', first_name: 'tester', last_name: 'name', email: "something@email.com", password: '12345678', activated: true)
     @game = Game.create(name: "Game for Message")
     @user_game = UserGame.create(user: @user, game: @game)
     @chatroom = Chatroom.new

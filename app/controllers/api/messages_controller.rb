@@ -1,4 +1,5 @@
 class Api::MessagesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :requires_login, only: [:index, :show, :edit, :update]
   before_action :get_message, only: [:show, :edit, :update, :destroy]
   before_action :get_user, only: [:update, :destroy]

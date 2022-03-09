@@ -1,5 +1,5 @@
 class Api::GamesController < ApplicationController
-  before_action :requires_login, only: [:index, :show, :edit, :update]
+  before_action :requires_login, only: [:index, :show, :edit, :update, :main_room]
   before_action :get_game, only: [:show, :edit, :update]
 
   def index
@@ -9,6 +9,10 @@ class Api::GamesController < ApplicationController
 
   def new
     @game = Game.new()
+    render json: @game
+  end
+
+  def show
     render json: @game
   end
 
@@ -30,6 +34,15 @@ class Api::GamesController < ApplicationController
       render json: @game
     else
       render json: { message: 'Off limits!' }, status: :unauthorized
+    end
+  end
+
+  def main_room
+    @game = Game.where(name: "main_room").first
+    if @game
+      render json: @game.chatrooms.first.messages.where(created_at: Time.new(params[:year], params[:month], params[:day]).beginning_of_day..Time.new(params[:year], params[:month], params[:day]).end_of_day)
+    else
+      render json: { message: "Off Limits!" }, status: 404
     end
   end
 

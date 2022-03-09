@@ -14,7 +14,8 @@ class Api::SessionsController < ApplicationController
         # return get_token(payload(@user.username, @user.id) )
         render json: {
           avatar: @user.avatar,
-          token: get_token(payload(@user.username, @user.id) )
+          token: get_token(payload(@user.username, @user.id) ),
+          user: @user
         }
       else
         render json: {

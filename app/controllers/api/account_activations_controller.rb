@@ -15,6 +15,9 @@ class Api::AccountActivationsController < ApplicationController
                 redirect_to "http://localhost:3001"
             elsif @user.activated?
                 flash[:success] = "Your around already activated!"
+                render json: {
+                    message: 'hi'
+                }
             else
                 flash[:info] = "Something went wrong!"
                 redirect_to "http://localhost:3001"

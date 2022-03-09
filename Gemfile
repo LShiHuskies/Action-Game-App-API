@@ -33,7 +33,7 @@ gem 'fog'
 
 gem 'jwt'
 
-# gem 'active_model_serializers'
+gem 'active_model_serializers'
 
 gem 'rack-cors'
 # 

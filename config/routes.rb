@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   post 'login', to: 'api/sessions#create'
   post 'recover', to: 'api/sessions#recover'
   delete 'logout', to: 'api/sessions#destroy'
+  get 'main_room', to: 'api/games#main_room'
   # resources :account_activations, only: [:edit]
 end

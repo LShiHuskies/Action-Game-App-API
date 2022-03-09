@@ -25,6 +25,7 @@ class Api::MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message.save
+      ActionCable.server.broadcast 'MessagesChannel', MessageSerializer.new(@message)
       render json: @message
     else
       render json: { message: 'Wrong!!!' }, status: 404

@@ -46,6 +46,15 @@ class Api::GamesController < ApplicationController
     end
   end
 
+  def main_room_chatroom
+    @game = Game.where(name: "main_room").first
+    if @game
+      render json: @game.chatrooms.first
+    else
+      render json: { message: "Off Limits!" }, status: 404
+    end
+  end
+
 
   private
 

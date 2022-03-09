@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   post 'recover', to: 'api/sessions#recover'
   delete 'logout', to: 'api/sessions#destroy'
   get 'main_room', to: 'api/games#main_room'
+  get 'main_room_chatroom', to: 'api/games#main_room_chatroom'
   # resources :account_activations, only: [:edit]
 
   mount ActionCable.server => '/cable'

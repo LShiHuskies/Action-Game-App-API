@@ -28,12 +28,12 @@ class GameTest < ActiveSupport::TestCase
     assert_not @game.valid?
   end
 
-  test "Game name must be unique" do
+  test "Game name does not have to be unique" do
     @game.name = "hello"
     @game.save
     @game2 = Game.new(name: "hello")
 
-    assert_not @game2.valid?
+    assert @game2.valid?
   end
 
   test "Game is not case sensitive" do
@@ -41,7 +41,7 @@ class GameTest < ActiveSupport::TestCase
     @game.save
     @game2 = Game.new(name: "Hello")
 
-    assert_not @game2.valid?
+    assert @game2.valid?
   end
 
 end

@@ -1,4 +1,5 @@
 class Api::GamesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :requires_login, only: [:index, :show, :edit, :update, :main_room]
   before_action :get_game, only: [:show, :edit, :update]
 
@@ -18,7 +19,11 @@ class Api::GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
+    @user = User.find(params[:game][:user_id]) if params[:game][:user_id]
     if (@game.save)
+      if @user
+        @game.users << @user
+      end
       render json: @game
     else
       render json: {message: 'Wrong!!!'}, status: 404
@@ -59,7 +64,7 @@ class Api::GamesController < ApplicationController
   private
 
   def game_params
-    params.require(:game).permit(:name, :score, :type)
+    params.require(:game).permit(:name, :score, :type, :difficulty, :weapon, :backup_supply)
   end
 
   def get_game

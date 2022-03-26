@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'api/sessions#destroy'
   get 'main_room', to: 'api/games#main_room'
   get 'main_room_chatroom', to: 'api/games#main_room_chatroom'
+  get 'top_scores', to: 'api/games#top_scores'
   # resources :account_activations, only: [:edit]
 
   mount ActionCable.server => '/cable'

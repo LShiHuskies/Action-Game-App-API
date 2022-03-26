@@ -1,6 +1,6 @@
 class Api::GamesController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :requires_login, only: [:index, :show, :edit, :update, :main_room]
+  before_action :requires_login, only: [:index, :show, :edit, :update, :main_room, :main_room_chatroom, :top_scores]
   before_action :get_game, only: [:show, :edit, :update]
 
   def index
@@ -60,11 +60,18 @@ class Api::GamesController < ApplicationController
     end
   end
 
+  def top_scores
+    game_type = params[:game_type] || 'single'
+    top = params[:top] || 10
+    @games = Game.where.not(score: nil).where(game_type: game_type).order("score DESC").limit(top)
+    render json: @games
+  end
+
 
   private
 
   def game_params
-    params.require(:game).permit(:name, :score, :type, :difficulty, :weapon, :backup_supply)
+    params.require(:game).permit(:name, :score, :type, :difficulty, :weapon, :backup_supply, :game_type)
   end
 
   def get_game

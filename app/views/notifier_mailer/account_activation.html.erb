@@ -1,9 +1,9 @@
-<h1>Sample App</h1>
+<h1>Welcome to Action Game Counter Strike!</h1>
 
 <p>Hi <%= @user.first_name %>, </p>
 
 <p>
-Welcome to the Sample App! Click on the link below to activate your account:
+Thank You for signing up! Please click on the Link below to activate your account and you will be directed to the page directly!
 </p>
 
 <%= link_to "Activate", edit_api_account_activation_url(@user.activation_token, email: @user.email) %>

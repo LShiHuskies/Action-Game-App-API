@@ -15,6 +15,18 @@ class NotifierMailer < ApplicationMailer
         )
       end
 
+      def send_game_email(recipient, otherPlayer, game)
+        @user = recipient
+        @user2 = otherPlayer
+        @game = game
+
+        mail(
+            to: [@user.email, @user2.email],
+            subject: "Your Game Information",
+            content_type: "text/html"
+        )
+      end
+
       def reset_email(recipient)
         @user = recipient
         mail(

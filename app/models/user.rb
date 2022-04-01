@@ -45,6 +45,10 @@ class User < ApplicationRecord
     # NotifierMailer.welcome_email(self).deliver_now
   end
 
+  def send_game_email(otherPlayer, game)
+    NotifierMailer.send_game_email(self, otherPlayer, game).deliver_now
+  end
+
   private
 
   def downcase_email

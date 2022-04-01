@@ -5,14 +5,14 @@
   </head>
   <body>
     <div>
-        <h3>Hi <%= @user.first_name || @user.email %>,</h3>
+        <h3>Hi <%= @user2.username and @user.username %>,</h3>
         <p>
-            You have successfully updated your account
+            Your game has been successfully created! The name of the game is <%= @game.name %> and <%= @game.id %>.
         </p>
         <p>
         If you have any questions, feel free to reach out to my email directly.
         </p>
-        <p>Thanks for joining and have a great day!</p>
+        <p>Enjoy your game!</p>
     </div>
   </body>
 </html>

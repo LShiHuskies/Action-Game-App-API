@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api do
     resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-    resources :user_games, only: [:index, :new, :create, :destroy]
+    resources :user_games, only: [:index, :new, :show, :create, :destroy]
     resources :games
     resources :chatrooms
     resources :messages
@@ -17,6 +17,11 @@ Rails.application.routes.draw do
   get 'main_room', to: 'api/games#main_room'
   get 'main_room_chatroom', to: 'api/games#main_room_chatroom'
   get 'top_scores', to: 'api/games#top_scores'
+  get 'versus_lobby', to: 'api/games#versus_mode_lobby'
+  get 'versus_mode_main_chatroom', to: 'api/games#versus_mode_main_chatroom'
+  get 'available_versus_games', to: 'api/games#available_versus_games'
+  get 'search_game', to: 'api/users#search_game'
+  post 'play', to: 'api/user_games#play'
   # resources :account_activations, only: [:edit]
 
   mount ActionCable.server => '/cable'

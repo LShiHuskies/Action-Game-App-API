@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_26_162514) do
+ActiveRecord::Schema.define(version: 2022_03_31_204816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 2022_03_26_162514) do
     t.string "weapon", default: "Pistol"
     t.string "backup_supply"
     t.string "game_type"
+    t.float "accuracy"
+    t.boolean "rejected"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -66,6 +68,7 @@ ActiveRecord::Schema.define(version: 2022_03_26_162514) do
     t.integer "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "accepted"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,7 +1,9 @@
 class Api::GamesController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :requires_login, only: [:index, :show, :edit, :update, :main_room, :main_room_chatroom, :top_scores]
-  before_action :get_game, only: [:show, :edit, :update]
+  before_action :requires_login, only: [:index, :show, :edit, :update, :main_room,
+                                        :main_room_chatroom, :top_scores, :versus_mode_lobby,
+                                        :versus_mode_main_chatroom]
+  before_action :get_game, only: [:show, :edit, :update, :reject]
 
   def index
     @games = Game.all
@@ -19,12 +21,22 @@ class Api::GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
+
     @user = User.find(params[:game][:user_id]) if params[:game][:user_id]
     if (@game.save)
-      if @user
+      @user2 = User.where(email: params[:game][:email].downcase, username: params[:game][:username]).first if params[:game][:email]
+      if @user2 && @user
         @game.users << @user
+        @game.users << @user2
+        @user2.send_game_email(@user, @game)
+        ActionCable.server.broadcast 'GameChannel', GameSerializer.new(@game)
+        render json: @game
+      else
+        @game.users << @user if @user
+
+        render json: @game
       end
-      render json: @game
+
     else
       render json: {message: 'Wrong!!!'}, status: 404
     end
@@ -67,11 +79,48 @@ class Api::GamesController < ApplicationController
     render json: @games
   end
 
+  def versus_mode_lobby
+    @game = Game.where(name: "versus_lobby").first
+    if @game
+      render json: @game.chatrooms.first.messages.where(created_at: Time.new(params[:year], params[:month], params[:day]).beginning_of_day..Time.new(params[:year], params[:month], params[:day]).end_of_day)
+    else
+      render json: { message: "Off Limits!" }, status: 404
+    end
+  end
+
+  def versus_mode_main_chatroom
+    @game = Game.where(name: "versus_lobby").first
+    if @game
+      render json: @game.chatrooms.first
+    else
+      render json: { message: "Off Limits!" }, status: 404
+    end
+  end
+
+  def available_versus_games
+    @games = Game.where(game_type: 'versus').where(score: nil)
+
+    render json: @games
+  end
+
+  def reject
+    @user = @game.users.find(params[:game][:user_id])
+
+    if @user
+      return if @game.rejected == true
+
+      @game.update(rejected: true)
+      ActionCable.server.broadcast 'GameChannel', GameSerializer.new(@game)
+      render json: @game
+    else
+      render json: { message: "Off Limits!" }, status: 404
+    end
+  end
 
   private
 
   def game_params
-    params.require(:game).permit(:name, :score, :type, :difficulty, :weapon, :backup_supply, :game_type)
+    params.require(:game).permit(:name, :score, :difficulty, :weapon, :backup_supply, :game_type, :accuracy)
   end
 
   def get_game

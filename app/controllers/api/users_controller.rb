@@ -1,7 +1,7 @@
 class Api::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :requires_login, only: [:index, :show, :edit, :update, :destroy]
-  before_action :get_user, only: [:show, :edit, :update, :destroy]
+  before_action :get_user, only: [:show, :edit, :update, :destroy, :search_game]
 
   def index
     @users = User.all
@@ -64,6 +64,16 @@ class Api::UsersController < ApplicationController
       render json: { message: 'WRONG!!!' }, status: :unauthorized
     end
 
+  end
+
+  def search_game
+    @game = @user.games.find(params[:game_id]) || @user.games.where(params[:name]).first
+
+    if @game
+      render json: @game
+    else
+      render json: { message: "NOT FOUND!" }, status: 404
+    end
   end
 
 

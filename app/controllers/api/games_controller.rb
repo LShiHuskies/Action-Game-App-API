@@ -2,7 +2,7 @@ class Api::GamesController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :requires_login, only: [:index, :show, :edit, :update, :main_room,
                                         :main_room_chatroom, :top_scores, :versus_mode_lobby,
-                                        :versus_mode_main_chatroom]
+                                        :versus_mode_main_chatroom, :reject]
   before_action :get_game, only: [:show, :edit, :update, :reject]
 
   def index
@@ -48,6 +48,7 @@ class Api::GamesController < ApplicationController
 
   def update
     if @game.update(game_params)
+      ActionCable.server.broadcast 'GameChannel', GameSerializer.new(@game) if @game.users.length == 2
       render json: @game
     else
       render json: { message: 'Off limits!' }, status: :unauthorized

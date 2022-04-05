@@ -21,7 +21,10 @@ Rails.application.routes.draw do
   get 'versus_mode_main_chatroom', to: 'api/games#versus_mode_main_chatroom'
   get 'available_versus_games', to: 'api/games#available_versus_games'
   get 'search_game', to: 'api/users#search_game'
-  post 'play', to: 'api/user_games#play'
+  patch 'play', to: 'api/user_games#play'
+  patch 'move', to: 'api/user_games#move'
+  post 'fire_bullet', to: 'api/user_games#fire_bullet'
+  patch 'reject', to: 'api/games#reject'
   # resources :account_activations, only: [:edit]
 
   mount ActionCable.server => '/cable'

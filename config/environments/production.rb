@@ -67,7 +67,21 @@ Rails.application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.default_url_options = { :host => "action-game-app-api.herokuapp.com", protocol: 'https' }
+
+  config.action_mailer.delivery_method = :smtp
+
+ActionMailer::Base.smtp_settings = {
+  :user_name => ENV['USER_NAME'], # This is the string literal 'apikey', NOT the ID of your API key
+  :password => ENV['API_KEY'], # This is the secret sendgrid API key which was issued during API key creation
+  :domain => 'heroku.com',
+  :address => ENV['ADDRESS'],
+  :port => 587,
+  :authentication => :plain,
+  :enable_starttls_auto => true
+}
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

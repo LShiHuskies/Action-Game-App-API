@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  default_url_options :host => "localhost:3000"
+  host = Rails.env == 'development' ? "localhost:3000" : "action-game-app-api.herokuapp.com"
+  default_url_options :host => host
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api do
     resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]

@@ -87,6 +87,8 @@ ActionMailer::Base.smtp_settings = {
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
+  config.action_cable.allowed_request_origins = ['https://action-game-app-api.herokuapp.com', 'http://action-game-app-api.herokuapp.com']
+
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
@@ -96,6 +98,8 @@ ActionMailer::Base.smtp_settings = {
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
+
+  config.web_socket_server_url = "wss://action-game-app-api.herokuapp.com/cable" 
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)

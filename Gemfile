@@ -36,6 +36,8 @@ gem 'jwt'
 gem 'active_model_serializers'
 
 gem 'rack-cors'
+
+gem 'redis', '~> 4.0'
 # 
 # gem "faker", "~> 1.9"
 # Use Capistrano for deployment

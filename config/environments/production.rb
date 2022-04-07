@@ -87,7 +87,7 @@ ActionMailer::Base.smtp_settings = {
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
-  config.action_cable.allowed_request_origins = ['https://action-game-app-api.herokuapp.com', 'http://action-game-app-api.herokuapp.com']
+  config.action_cable.allowed_request_origins = ['https://action-game-app-api.herokuapp.com', 'http://action-game-app-api.herokuapp.com', 'http://localhost:3000']
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify

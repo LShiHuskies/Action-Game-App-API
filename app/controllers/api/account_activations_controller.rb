@@ -8,11 +8,11 @@ class Api::AccountActivationsController < ApplicationController
             flash[:success] = "Account activated!"
             token = get_token(payload(@user.username, @user.id) )
             NotifierMailer.welcome_email(@user).deliver_now
-            redirect_to "http://localhost:3001?token=#{token}"
+            redirect_to "https://action-game-app.herokuapp.com?token=#{token}"
         else
             if !@user
                 flash[:info] = "Something went wrong!"
-                redirect_to "http://localhost:3001"
+                redirect_to "https://action-game-app.herokuapp.com"
             elsif @user.activated?
                 flash[:success] = "Your around already activated!"
                 render json: {
@@ -20,7 +20,7 @@ class Api::AccountActivationsController < ApplicationController
                 }
             else
                 flash[:info] = "Something went wrong!"
-                redirect_to "http://localhost:3001"
+                redirect_to "https://action-game-app.herokuapp.com"
             end
         end
     end
